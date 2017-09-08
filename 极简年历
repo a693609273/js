@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin: 0;padding:0;}
+		</style>
+	</head>
+	<body>
+		<script>
+			var div=document.createElement("div");
+			document.body.appendChild(div);
+			div.style.cssText="width:450px;margin: 0 auto;background:#808080;";
+			var ul=document.createElement("ul");
+			div.appendChild(ul);
+			ul.style.cssText="display: flex;justify-content:space-between;padding:10px;flex-wrap:wrap";
+			for (var i=0;i<12;i++) {
+				var li=document.createElement("li");
+				ul.appendChild(li);
+				li.style.cssText="width:100px;height:100px;list-style: none;background: #f7f7f7;margin-bottom: 5px;text-align: center;color: greenyellow"
+				li.setAttribute("onclick","cal("+(i+1)+")");
+				var p1=document.createElement("p");
+				li.appendChild(p1);
+				p1.style.cssText="font:700 50px/60px ''; "
+				p1.innerHTML=(i+1);
+				var p2=document.createElement("p");
+				li.appendChild(p2);
+				p2.innerHTML="Jan"
+				p2.style.cssText="font:700 30px/40px '' ;"
+			}
+			var div2=document.createElement("div");
+			div.appendChild(div2);
+			div2.style.cssText="height:100px;padding:10px;background: #f181f1;background-clip: content-box;"
+			var mouth=document.getElementsByTagName("li");
+			function cal(j){
+				for(z=0;z<12;z++){
+				mouth[z].style.background ="#f7f7f7";
+				mouth[z].style.color="greenyellow";
+				}
+				mouth[j-1].style.background ="#FFFFFF";
+				mouth[j-1].style.color="#FF4500";
+				
+				div2.innerHTML=(j)+"月份好";
+			}
+		</script>
+	</body>
+</html>
