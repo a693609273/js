@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin: 0;padding: 0;}
+			input{display: block;width: 300px;}
+			ul{display: flex;justify-content: space-between;width: 300px;border-radius: 5px;border:1px solid #666;padding: 2px;;}
+			li{width: 90px;height:5px;border: 1px solid #666666;list-style: none;}
+			li:first-child{border-radius: 4px 0 0 4px;}
+			li:last-child{border-radius: 0px 4px 4px 0px;}
+			#l1 {
+				background: red;
+			}
+			
+			#l2 {
+				background: yellow;
+			}
+			
+			#l3 {
+				background: green;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="text"/>
+		<ul id="ul">	
+		</ul>
+		<script>
+			var ul=document.getElementById("ul");
+			var p=document.createElement("p");
+			var input=document.querySelector("input");
+			document.body.appendChild(p);
+			(function(){
+				for (var i=0;i<3;i++) {
+					ul.innerHTML+="<li></li>"
+				}
+			})()
+			input.onfocus=function(){
+				p.innerHTML="";
+				li[0].removeAttribute("id","l1")
+					li[1].removeAttribute("id","l2")
+					li[2].removeAttribute("id","l3")
+			}
+			var li=ul.getElementsByTagName("li");
+			input.onblur=function (){
+				var miMa=input.value;
+				var t=0;
+				if(miMa.length>6){
+					if(/[a-z]||_/gi.test(miMa)){
+						t++;
+					}
+					if(/[0-9]/gi.test(miMa)){
+						t++;	
+					}
+					if(/\W/g.test(miMa)){
+						t++;
+					}
+				}
+				else{
+					p.innerHTML="密码太短";
+				}
+				console.log(t);
+				if(t==1){
+					li[0].setAttribute("id","l1")
+					p.innerHTML="低";
+				}
+				if(t==2){
+					li[0].setAttribute("id","l1")
+					li[1].setAttribute("id","l2")
+					p.innerHTML="中";
+				}
+				if(t==3){
+					li[0].setAttribute("id","l1")
+					li[1].setAttribute("id","l2")
+					li[2].setAttribute("id","l3")
+					p.innerHTML="高";
+				}
+			}
+		</script>
+	</body>
+</html>
