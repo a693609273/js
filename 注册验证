@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			div {
+				display: flex;
+				justify-content: flex-end;
+				width: 400px;
+				margin: 20px 0;
+				font: 12px/30px "";
+				position: relative;
+			}
+			
+			div input {
+				display: block;
+				width: 300px;
+				height: 30px;
+				border: 1px solid gray;
+				padding: 0 10px;
+			}
+			
+			div span {
+				word-spacing: 3px;
+				padding-right: 3px;
+			}
+			
+			div span i {
+				padding: 0 5px;
+				color: red;
+			}
+			
+			#anquan {
+				margin: 0;
+				height: 18px;
+			}
+			
+			#y {
+				width: 560px;
+			}
+			
+			#y input {
+				width: 240px;
+			}
+			
+			ul {
+				overflow: hidden;
+			}
+			
+			ul li:first-child {
+				width: 80px;
+				background: 0;
+			}
+			
+			li {
+				width: 50px;
+				background: #f1f1f1;
+				text-align: center;
+				margin: 0 2px;
+				list-style: none;
+				float: left;
+				font: 12px/18px "";
+				height: 18px;
+			}
+			
+			#yzm {
+				width: 108px;
+				font:700 18px/30px "";
+				text-align: center;
+			}
+			
+			
+			#aj{
+				background: red;
+				display: block;
+				border: 0;
+				width: 240px;
+				height: 40px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form>
+			<div>
+				<span><i>*</i>邮箱 : </span>
+				<input id="youxiang" type="text" placeholder="请输入邮箱"></div>
+			<div>
+				<span><i>*</i>设置密码 : </span>
+				<input id="mima1" onchang="call()" type="password" placeholder="6-16位大小写英文字母、数字、或符号的组合">
+			</div>
+			<div id="anquan">
+				<ul>
+					<li>安全程度 : </li>
+					<li id="l1">低</li>
+					<li id="l2">中</li>
+					<li id="l3">高</li>
+				</ul>
+			</div>
+			<div>
+				<span><i>*</i>确认密码 : </span>
+				<input id="mima2" type=" password " placeholder="请再次输入密码">
+			</div>
+			<div>
+				<span><i>*</i>手机号码 : </span>
+				<input id="tel" type="number " placeholder="请输入手机号码">
+			</div>
+			<div id="y">
+				<span><i>*</i>图形验证码 : </span>
+				<input id="yz" type="text ">
+				<span id="yzm"></span>
+				<b>看不清？<u id="hyz">换一张</u></b>
+			</div>
+			<div >
+				<button id="aj">同意协议并注册</button>
+			</div>
+		</form>
+		<script>
+			var yx = document.getElementById("youxiang");
+			var mm1 = document.getElementById("mima1");
+			var mm2 = document.getElementById("mima2");
+			var tel = document.getElementById("tel");
+			var aq = document.getElementById("anquan");
+			var yz = document.getElementById("yz");
+			var yzm = document.getElementById("yzm");
+			var hyz = document.getElementById("hyz");
+			var aj=document.getElementById("aj");
+			hyz.onclick = function yzm1() {
+				var j = new String;
+				for(let s = 0; s < 5; s++) {
+					var i = 48 + parseInt(68 * Math.random());
+					if((i > 57 && i < 65) || (i < 97 && i > 90)) {
+						s--;
+					} else {
+						j = j + String.fromCharCode(i);
+//									console.log(i);
+					}
+				}
+				yzm.innerHTML = j;
+			}
+			window.onload = hyz.onclick;
+			var p1 = document.createElement("p");
+			yx.parentNode.appendChild(p1);
+			p1.style.cssText = "width: 400px;position: absolute;height: 30px;left:420px;top:0px;border:1px solid red;background: #f1f1f1;display: none;"
+			yx.onblur = function() {
+				var str = yx.value;
+				var pattern = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+				//				console.log(str);
+				if(str.length != 0) {
+					if(pattern.test(str)) {
+						yx.style.border = "1px solid #f1f1f1"
+						p1.style.display = "block";
+						p1.innerHTML = "√";
+					} else {
+						p1.style.display = "block";
+						p1.innerHTML = "邮箱格式不正确";
+						yx.style.border = "1px solid red";
+					}
+				} else {
+					p1.style.display = "block";
+					p1.innerHTML = "邮箱不能为空";
+					yx.style.border = "1px solid red";
+				}
+			}
+			var p2 = document.createElement("p");
+			mm1.parentNode.appendChild(p2);
+			p2.style.cssText = "width: 400px;position: absolute;height: 30px;left:420px;top:0;border:1px solid red;background: #f1f1f1;display: none;";
+			var str1;
+			mm1.addEventListener("blur",function(){
+				str1 = mm1.value;
+				var pattern = /^.{6,16}$/;
+				mm2.onblur();
+				if(str1.length != 0) {
+					if(pattern.test(str1)) {
+						mm1.style.border = "1px solid #f1f1f1";
+						p2.style.display = "block";
+						p2.innerHTML = "√";
+					} else {
+						p2.style.display = "block";
+						p2.innerHTML = "密码格式不正确";
+						mm1.style.border = "1px solid red";
+					}
+				} else {
+					p2.style.display = "block";
+					p2.innerHTML = "密码不能为空";
+					mm1.style.border = "1px solid red";
+				}
+			})
+			mm1.addEventListener("change",function() {
+				var li1 = document.getElementById("l1");
+				var li2 = document.getElementById("l2");
+				var li3 = document.getElementById("l3");
+				li1.style.backgroundColor = "#f1f1f1"
+				li2.style.backgroundColor = "#f1f1f1"
+				li3.style.backgroundColor = "#f1f1f1"
+				str1 = mm1.value;
+				console.log(str1);
+				var dg = 0;
+				if(/\d/g.test(str1)) {
+					dg++;
+				}
+				if(/[A-Z]/gi.test(str1)) {
+					dg++;
+				}
+				if(/\W/g.test(str1)) {
+					dg++;
+				}
+				console.log(dg);
+				if(dg == 1) {
+					li1.style.backgroundColor = "red"
+					li2.style.backgroundColor = "#f1f1f1"
+					li3.style.backgroundColor = "#f1f1f1"
+				}
+				if(dg == 2) {
+					li1.style.backgroundColor = "red"
+					li2.style.backgroundColor = "yellow"
+					li3.style.backgroundColor = "#F1F1F1"
+				}
+				if(dg == 3) {
+					li1.style.backgroundColor = "red"
+					li2.style.backgroundColor = "yellow"
+					li3.style.backgroundColor = "green";
+				}
+			})
+			var p3 = document.createElement("p");
+			mm2.parentNode.appendChild(p3);
+			p3.style.cssText = "width: 400px;position: absolute;height: 30px;left:420px;top:0;border:1px solid red;background: #f1f1f1;display: none;";
+			mm2.onblur = function() {
+				var str2 = mm2.value;
+				if(str1 == str2) {
+					mm2.style.border = "1px solid #f1f1f1";
+					p3.style.display = "block";
+					p3.innerHTML = "√";
+				} else {
+					p3.style.display = "block";
+					p3.innerHTML = "密码不一致";
+					mm2.style.border = "1px solid red";
+				}
+			}
+			var p4 = document.createElement("p");
+			tel.parentNode.appendChild(p4);
+			p4.style.cssText = "width: 400px;position: absolute;height: 30px;left:420px;top:0;border:1px solid red;background: #f1f1f1;display: none;";
+			tel.onblur = function() {
+				var str4 = tel.value;
+				var pattern = /^1[35678]\d{9}$/;
+				if(str4.length != 0) {
+					if(pattern.test(str4)) {
+						tel.style.border = "1px solid ";
+						p4.style.display = "block";
+						p4.innerHTML = "√";
+
+					} else {
+						p4.style.display = "block";
+						p4.innerHTML = "号码格式不正确";
+						tel.style.border = "1px solid red";
+					}
+				} else {
+					p4.style.display = "block";
+					p4.innerHTML = "号码不能为空";
+					tel.style.border = "1px solid red";
+				}
+			}
+		var p5 = document.createElement("p");
+			y.appendChild(p5);
+			p5.style.cssText = "width: 400px;position: absolute;height: 30px;left:610px;top:0;border:1px solid red;background: #f1f1f1;display: none;";
+			yz.onblur = function() {
+					if(yz.value==yzm.innerHTML) {
+						yz.style.border = "1px solid ";
+						p5.style.display = "block";
+						p5.innerHTML = "√";
+						console.log(1);
+					} else {
+						console.log(2);
+						p5.style.display = "block";
+						p5.innerHTML = "验证码不正确";
+						yz.style.border = "1px solid red";
+					}
+				} 
+			aj.onclick=function(){
+				if(p1.innerHTML=="√"&&p2.innerHTML=="√"&&p3.innerHTML=="√"&&p4.innerHTML=="√"&&p5.innerHTML=="√")
+				{
+					alert("注册成功");
+				}
+				else{
+					alert(发生错误);
+					return false;
+				}
+			}
+		</script>
+	</body>
+
+</html>
