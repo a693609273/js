@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin: 0;padding: 0;}
+			div{width: 100px;height: 100px;position: absolute;}
+			div:first-child{left:200px;top: 500px;background: #CC0000;}
+			div:nth-child(2){left: 1000px;top: 100px;background: #0000FF;}
+		</style>
+	</head>
+	<body>
+		<div></div>
+		<div></div>
+		<script>
+			var odiv1=document.getElementsByTagName('div')[0];
+			var odiv2=document.getElementsByTagName('div')[1];
+			var speed=5;
+			var current={
+				x:odiv1.offsetLeft,
+				y:odiv1.offsetTop
+			}
+			var target={
+				x:odiv2.offsetLeft,
+				y:odiv2.offsetTop
+			}
+			var a=0.0017;
+			var b=((target.y-current.y)-a*Math.pow((target.x-current.x),2))/(target.x-current.x);
+			odiv1.onclick=function(){
+				var num=0;
+				var omj=this.cloneNode(true);
+				omj.style.cssText="background:rgba(255,0,0,0.3);width:50px;height:50px;"
+				omj.style.left=this.offsetLeft+'px';
+				omj.style.top=this.offsetTop+'px';
+				document.body.appendChild(omj);
+				var timer=setInterval(function(){
+					num+=3;
+					omj.style.transform="rotate("+num+"deg)";
+					omj.style.left=omj.offsetLeft+speed+"px";
+					omj.style.top=odiv1.offsetTop+a*Math.pow((omj.offsetLeft-current.x),2)+b*(omj.offsetLeft-current.x)+'px';
+					console.log(omj.offsetLeft-current.x)
+					if(omj.offsetLeft==target.x){
+					clearInterval(timer);
+					document.body.removeChild(omj);
+					}
+				},10)
+			}
+			
+		</script>
+	</body>
+</html>
