@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			html {
+				height: 100%;
+			}
+			
+			body {
+				height: 100%;
+				overflow: hidden;
+				background: #000000;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script type="text/javascript" src="public.js"></script>
+		<script>
+    function move(obj,json,fn){
+	clearInterval(obj.timer);
+	obj.timer=setInterval(function(){
+		var bstop=true;
+		for(var attr in json){
+			var current=null;
+			if(attr=='opacity'){
+				current=Math.round(getstyle(obj,attr)*100);
+			}else{
+				current=parseInt(getstyle(obj,attr));
+			}
+			var speed=( json[attr]-current)/5;
+			speed=speed>0?Math.ceil(speed):Math.floor(speed);
+			if(current!= json[attr]){
+				if(attr=='opacity'){
+					obj.style.opacity=(current+speed)/100;
+					obj.style.filter='alpha(opacity='+(current+speed)+')';
+				}else{
+					obj.style[attr]=current+speed+'px';
+				}
+				bstop=false;
+			}
+		}
+			function YanHua(x, y) {
+				this.x = x;
+				this.y = y;
+				var that = this;
+				this.create = function() {
+					this.paoZhang = document.createElement("div");
+					this.paoZhang.style.cssText = "width:10px;height:10px;position:absolute;background:#fff";
+					this.paoZhang.style.left = this.x + 'px';
+					this.paoZhang.style.top = document.documentElement.clientHeight + "px";
+					document.body.appendChild(this.paoZhang);
+					this.move();
+				}
+				this.move = function() {
+					move(this.paoZhang, {
+						top: this.y
+					}, function() {
+						document.body.removeChild(that.paoZhang);
+						that.suiPian();
+					})
+				}
+				this.suiPian = function() {
+					for(let i = 0; i < tool.ranNum(50, 100); i++) {
+						this.onesuiPian = document.createElement("div");
+						this.onesuiPian.style.cssText = "width:5px;height:5px;position:absolute;border-radius:50%;background:rgb(" + tool.ranNum(0, 255) + "," + tool.ranNum(0, 255) + "," + tool.ranNum(0, 255) + ");";
+						this.onesuiPian.style.left = this.x + "px";
+						this.onesuiPian.style.top = this.y + "px";
+						document.body.appendChild(this.onesuiPian);
+						this.boom(this.onesuiPian);
+					}
+				}
+				this.boom = function(obj) {
+					var speedx = parseInt((Math.random() > 0.5 ? '-' : '') + tool.ranNum(1, 15));
+					var speedy = parseInt((Math.random() > 0.5 ? '-' : '') + tool.ranNum(1, 15));
+					var x = this.x;
+					var y = this.y;
+					obj.timer = setInterval(function() {
+						x = x + speedx;
+						y = y + speedy++;
+						console.log(obj);
+						if(x > document.documentElement.clientWidth - 5) {
+							clearInterval(obj.timer);
+							document.body.removeChild(obj)
+						} else if(x < 0) {
+							clearInterval(obj.timer);
+							document.body.removeChild(obj)
+						}
+						if(y > document.documentElement.clientHeight - 5) {
+							clearInterval(obj.timer);
+							document.body.removeChild(obj)
+						}
+						obj.style.left = x + 'px';
+						obj.style.top = y + 'px';
+					}, 50)
+				}
+			}
+			onclick = function(e) {
+				var e = e || window.event;
+				var yh = new YanHua(e.clientX, e.clientY);
+				yh.create();
+			}
+		</script>
+	</body>
+
+</html>
